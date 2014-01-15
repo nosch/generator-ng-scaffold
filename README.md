@@ -1,4 +1,4 @@
 generator-ng-scaffold
 =====================
 
-A yeoman generator for web applications based on AngularJS.
+A [yeoman](http://yeoman.io) generator for AngularJS web applications. Based on [ng-scaffold](http://github.com/nosch/ng-scaffold).

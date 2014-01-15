@@ -1,0 +1,13 @@
+{
+    "name": "<%= _.slugify(appName) %>",
+    "version": "0.0.1",
+    "dependencies": {},
+    "devDependencies": {
+        "angular": "1.2.8",
+        "angular-route": "1.2.8",
+        "angular-mocks": "1.2.8",
+        "jquery": ">= 2.0.3",
+        "modernizr": "http://modernizr.com/downloads/modernizr-latest.js",
+        "bootstrap": ">= 3.0.3"
+    }
+}

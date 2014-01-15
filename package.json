@@ -1,0 +1,43 @@
+{
+    "name": "generator-ng-scaffold",
+    "version": "0.1.0",
+    "description": "A yeoman generator for AngularJS web applications.",
+    "keywords": [
+        "yeoman-generator",
+        "scaffold",
+        "framework",
+        "front-end",
+        "app"
+    ],
+    "homepage": "https://github.com/nosch/generator-ng-scaffold",
+    "bugs": "https://github.com/nosch/generator-ng-scaffold/issues",
+    "author": {
+        "name": "Norbert Schmidt",
+        "email": "",
+        "url": "https://github.com/nosch"
+    },
+    "main": "app/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/nosch/generator-ng-scaffold.git"
+    },
+    "scripts": {
+        "test": "mocha"
+    },
+    "dependencies": {
+        "yeoman-generator": "~0.14.0",
+        "underscore.string": "~2.3.3"
+    },
+    "peerDependencies": {
+        "yo": ">=1.0.0"
+    },
+    "engines": {
+        "node": ">=0.8.0",
+        "npm": ">=1.2.10"
+    },
+    "licenses": [
+        {
+          "type": "MIT"
+        }
+    ]
+}
