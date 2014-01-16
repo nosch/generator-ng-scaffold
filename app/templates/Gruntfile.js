@@ -365,7 +365,7 @@ module.exports = function (grunt) {
                     expand: true
                 }, {
                     // copy bower_components: Modernizr
-                    src: 'bower_components/modernizr/index.js',
+                    src: 'bower_components/modernizr/modernizr.js',
                     dest: 'dist/lib/modernizr.js'
                 }]
             },
@@ -382,7 +382,7 @@ module.exports = function (grunt) {
 
         modernizr: {
             // generate a uglified version of modernizr.js
-            'devFile' : 'bower_components/modernizr/index.js',
+            'devFile' : 'bower_components/modernizr/modernizr.js',
             'outputFile' : 'dist/lib/modernizr.min.js',
             'uglify' : true,
             'tests' : [],

@@ -4,7 +4,7 @@
  */
 angular.module('<%= _.camelize(appName) %>.config', [
         'user',
-        'ngRoute'
+        <%= ngModules %>
     ])
 
     .constant('NAV_ITEMS', [

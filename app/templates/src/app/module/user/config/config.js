@@ -6,7 +6,7 @@ angular.module('user.config', [
         'user.dashboard',
         'user.account',
         'user.profile',
-        'ngRoute'
+        <%= ngModules %>
     ])
 
     .config([
