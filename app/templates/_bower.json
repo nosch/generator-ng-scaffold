@@ -16,6 +16,7 @@
         "underscore.string": "latest"<% } %><% if (lodash) { %>,
         "lodash": "latest"<% } %><% if (momentjs) { %>,
         "momentjs": "latest"<% } %>,
-        "modernizr": "latest"
+        "modernizr": "latest",
+        "bootstrap": ">= 3.0.3"
     }
 }

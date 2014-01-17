@@ -298,9 +298,17 @@ module.exports = function (grunt) {
             unmin: [
                 'dist/script/app.js',
                 'dist/lib/angular.js',
-                'dist/lib/angular-route.js',
+                <% if (ngRoute) { %>'dist/lib/angular-route.js',<% } %>
+                <% if (ngCookies) { %>'dist/lib/angular-cookies.js',<% } %>
+                <% if (ngMock) { %>'dist/lib/angular-mocks.js',<% } %>
+                <% if (ngAnimate) { %>'dist/lib/angular-animate.js',<% } %>
+                <% if (ngTouch) { %>'dist/lib/angular-touch.js',<% } %>
+                <% if (jquery) { %>'dist/lib/jquery.js',<% } %>
+                <% if (underscore) { %>'dist/lib/underscore.js',<% } %>
+                <% if (underscoreString) { %>'dist/lib/underscore.string.js',<% } %>
+                <% if (lodash) { %>'dist/lib/lodash.js',<% } %>
+                <% if (momentjs) { %>'dist/lib/moment.js',<% } %>
                 'dist/lib/bootstrap.js',
-                'dist/lib/jquery.js',
                 'dist/lib/modernizr.js'
             ]
         },
@@ -351,19 +359,97 @@ module.exports = function (grunt) {
                     src : ['angular.js', 'angular.min.js'],
                     dest: 'dist/lib',
                     expand: true
-                }, {
-                    // copy bower_components: Angular-Route
+                }<% if (ngRoute) { %>, {
+                    // copy bower_components: ngRoute
                     cwd: 'bower_components/angular-route/',
                     src : ['angular-route.js', 'angular-route.min.js'],
                     dest: 'dist/lib',
                     expand: true
-                }, {
+                }<% } %><% if (ngResource) { %>, {
+                    // copy bower_components: ngResource
+                    cwd: 'bower_components/angular-resource/',
+                    src : ['angular-resource.js', 'angular-resorce.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (ngCookies) { %>, {
+                    // copy bower_components: ngCookies
+                    cwd: 'bower_components/angular-cookies/',
+                    src : ['angular-cookies.js', 'angular-cookies.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (ngSanitize) { %>, {
+                    // copy bower_components: ngSanitize
+                    cwd: 'bower_components/angular-sanitize/',
+                    src : ['angular-sanitize.js', 'angular-sanitize.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (ngMock) { %>, {
+                    // copy bower_components: ngMock
+                    cwd: 'bower_components/angular-mocks/',
+                    src : ['angular-mocks.js', 'angular-mocks.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (ngAnimate) { %>, {
+                    // copy bower_components: ngAnimate
+                    cwd: 'bower_components/angular-animate/',
+                    src : ['angular-animate.js', 'angular-animate.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (ngTouch) { %>, {
+                    // copy bower_components: ngTouch
+                    cwd: 'bower_components/angular-touch/',
+                    src : ['angular-touch.js', 'angular-touch.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (jquery) { %>, {
                     // copy bower_components: jQuery
                     cwd: 'bower_components/jquery/',
                     src : ['jquery.js', 'jquery.min.js'],
                     dest: 'dist/lib',
                     expand: true
+                }<% } %><% if (underscore) { %>, {
+                    // copy bower_components: underscore
+                    cwd: 'bower_components/underscore/',
+                    src : ['underscore.js'],
+                    dest: 'dist/lib',
+                    expand: true
                 }, {
+                    // copy bower_components: underscore-min
+                    cwd: 'bower_components/underscore/',
+                    src : ['underscore-min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (underscoreString) { %>, {
+                    // copy bower_components: underscore.string
+                    cwd: 'bower_components/underscore.string/lib',
+                    src : ['underscore.string.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }, {
+                    // copy bower_components: underscore.string-min
+                    cwd: 'bower_components/underscore.string/dist',
+                    src : ['underscore.string.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (lodash) { %>, {
+                    // copy bower_components: lodash
+                    cwd: 'bower_components/lodash/dist/',
+                    src : ['lodash.js', 'lodash.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %><% if (momentjs) { %>, {
+                    // copy bower_components: moment
+                    cwd: 'bower_components/momentjs/',
+                    src : ['moment.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }, {
+                    // copy bower_components: moment-min
+                    cwd: 'bower_components/momentjs/min/',
+                    src : ['moment.min.js'],
+                    dest: 'dist/lib',
+                    expand: true
+                }<% } %>, {
                     // copy bower_components: Modernizr
                     src: 'bower_components/modernizr/modernizr.js',
                     dest: 'dist/lib/modernizr.js'

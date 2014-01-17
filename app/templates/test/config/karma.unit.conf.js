@@ -14,8 +14,13 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             'bower_components/angular/angular.js'<% if (ngRoute) { %>,
-            'bower_components/angular-route/angular-route.js'<% } %><% if (ngMock) { %>,
-            'bower_components/angular-mocks/angular-mocks.js'<% } %>,
+            'bower_components/angular-route/angular-route.js'<% } %><% if (ngResource) { %>,
+            'bower_components/angular-resource/angular-resource.js'<% } %><% if (ngSanitize) { %>,
+            'bower_components/angular-sanitize/angular-sanitize.js'<% } %><% if (ngCookies) { %>,
+            'bower_components/angular-cookies/angular-cookies.js'<% } %><% if (ngMock) { %>,
+            'bower_components/angular-mocks/angular-mocks.js'<% } %><% if (ngAnimate) { %>,
+            'bower_components/angular-animate/angular-animate.js'<% } %><% if (ngTouch) { %>,
+            'bower_components/angular-touch/angular-touch.js'<% } %>,
             'src/**/*.js',
             'test/unit/**/*.spec.js'
         ],
