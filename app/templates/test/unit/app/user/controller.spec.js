@@ -1,7 +1,6 @@
 /**
  * Unit Testing: User/Controller
  */
-
 describe('Unit Testing: User/Controller', function () {
     'use strict';
 
