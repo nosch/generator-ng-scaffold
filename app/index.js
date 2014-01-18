@@ -26,7 +26,7 @@ Generator.prototype.askForAppName = function askForAppName() {
 
     var prompts = [{
         name: 'appName',
-        message: 'How would you like to call your Angualr app?',
+        message: 'How would you like to call your Angular app?',
         default: 'My Application'
     }];
 
