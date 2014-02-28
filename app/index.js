@@ -9,6 +9,13 @@ var Generator = module.exports = function NgScaffoldGenerator(args, options, con
     yeoman.generators.Base.apply(this, arguments);
 
     this.on('end', function () {
+        this.config.set('appName', this.appName);
+        this.config.set('moduleDir', 'src/app/module/');
+        this.config.set('configDir','config/');
+        this.config.set('serviceDir','service/');
+        this.config.set('viewDir','view/');
+        this.config.save();
+
         this.installDependencies({ skipInstall: options['skip-install'] });
     });
 
@@ -38,21 +45,27 @@ Generator.prototype.askForAppName = function askForAppName() {
 };
 
 // Directories and templates
-Generator.prototype.app = function app() {
+Generator.prototype.processConfigFiles = function processConfigFiles() {
     this.template('Gruntfile.js', 'Gruntfile.js');
     this.template('_bower.json', 'bower.json');
     this.template('_package.json', 'package.json');
+
+    this.copy('bowerrc', '.bowerrc');
+    this.copy('gitignore', '.gitignore');
+    this.copy('editorconfig', '.editorconfig');
+    this.copy('jshintrc', '.jshintrc');
 };
 
-Generator.prototype.projectfolders = function projectfolders() {
+Generator.prototype.projectFolders = function projectFolders() {
     this.directory('.\/build', 'build', true);
     this.directory('.\/src', 'src', true);
     this.directory('.\/test', 'test', true);
 };
 
-Generator.prototype.templateStuff = function templateStuff() {
-    // src folder
+Generator.prototype.generateApp = function generateApp() {
+    // build folder
     this.template('.\/build\/.gitkeep', 'build/.gitkeep');
+    // src folder
     this.template('.\/src\/index.html', 'src/index.html');
     this.template('.\/src\/app\/app.js', 'src/app/app.js');
     this.template('.\/src\/app\/config\/config.js', 'src/app/config/config.js');
@@ -81,11 +94,4 @@ Generator.prototype.templateStuff = function templateStuff() {
     this.template('.\/test\/config\/karma.unit.conf.js', 'test/config/karma.unit.conf.js');
     this.template('.\/test\/unit\/app\/controller.spec.js', 'test/unit/app/controller.spec.js');
     this.template('.\/test\/unit\/app\/user\/controller.spec.js', 'test/unit/app/user/controller.spec.js');
-};
-
-Generator.prototype.projectfiles = function projectfiles() {
-    this.copy('bowerrc', '.bowerrc');
-    this.copy('gitignore', '.gitignore');
-    this.copy('editorconfig', '.editorconfig');
-    this.copy('jshintrc', '.jshintrc');
 };
