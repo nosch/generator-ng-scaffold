@@ -1,6 +1,8 @@
 /**
+ * <%= appName %>
  * Unit Testing: Application/Controller
  */
+
 describe('Unit Testing: Application/Controller', function () {
     'use strict';
 
@@ -13,19 +15,20 @@ describe('Unit Testing: Application/Controller', function () {
         $controller = $injector.get('$controller');
     }));
 
-    describe('ApplicationCtrl', function () {
-        it('should set the correct heading text "<%= appName %>!"', function () {
+    describe('HomeCtrl', function () {
+        it('should set the correct heading text "<%= appName %>"', function () {
             var expected = {
-                heading: '<%= appName %>!'
+                heading: '<%= appName %>'
             };
 
             var params = {
                 $scope: $scope
             };
 
-            $controller('ApplicationCtrl', params);
+            $controller('HomeCtrl', params);
 
             expect($scope.heading).toBe(expected.heading);
         });
     });
 });
+

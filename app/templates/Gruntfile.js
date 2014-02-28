@@ -1,9 +1,4 @@
 // Generated on <%= (new Date).toISOString().split('T')[0] %> using <%= pkg.name %> <%= pkg.version %>
-/**
- * ng-scaffold
- * Grunt task runner configuration.
- */
-
 module.exports = function (grunt) {
     'use strict';
 
@@ -13,216 +8,137 @@ module.exports = function (grunt) {
     // display the elapsed execution time of all tasks
     require('time-grunt')(grunt);
 
-   /**
-    * Register custom tasks.
-    */
-    // Create build
-    grunt.registerTask('build', [
-        'clean:dist',
-        'clean:release',
-        'copy:build',
-        'modernizr',
-        'concat',
-        'recess',
-        'uglify'
-    ]);
-
-    // Development build
-    // with linting,
-    // but no tests
-    grunt.registerTask('dev', [
-        'jshint:dev',
-        'plato:dev',
-        'build',
-        'jshint:afterconcat'
-    ]);
-
-    // Run and autowatch development build
-    // on lokal serverlivereload
-    // (linting included, no tests)
-    grunt.registerTask('dev-server', [
-        'dev',
-        'connect:dev',
-        'watch:dev'
-    ]);
-
-    // Run and autowatch unit tests
-    // on development build
-    // with Karma
-    // (linting included)
-    grunt.registerTask('dev-test', [
-        'dev',
-        'watch:test'
-    ]);
-
-    // Release build
-    // with linting and
-    // running all tests
-    grunt.registerTask('release', 'Release build', function () {
-        grunt.task.run(
-            'jshint:release',
-            'build',
-            'karma:unit',
-            'jshint:afterconcat',
-            'clean:unmin',
-            'copy:release',
-            'clean:dist',
-            'connect:testRelease',
-            'karma:e2e'
-        );
-
-        // set suffix for minified files to '.min'
-        grunt.config.set('meta.minSuffix', '.min');
-    });
-
-    // Start and open release server
-    // (no build, no linting, no tests)
-    grunt.registerTask('release-server', [
-        'connect:release'
-    ]);
-
-    // Run unit and e2e tests
-    // on build
-    // with Karma
-    // (no linting, no autowatch)
-    grunt.registerTask('test', [
-        'build',
-        'karma:unit',
-        'connect:testDev',
-        'karma:e2e'
-    ]);
-
-   /**
-    * Configure tasks.
-    */
+    // Task configuration
     grunt.initConfig({
-        // get npm config
         pkg: grunt.file.readJSON('package.json'),
 
-        // define meta data
-        meta: {
-            // This is a file suffix for minified sources like jquery.min.js;
-            // the default value is an empty string;
-            // this suffix is set to '.min' inside the release task;
-            // it's used as a template variable inside index.html;
-            // based on this variable the minified sources for the release task,
-            // or the unminified files for the build and development tasks are loaded.
-            //
-            minSuffix: '',
-            // doc block for the concatinated and compiled files
-            banner:
-                '/**\n' +
-                ' * <%%= pkg.name %> v<%%= pkg.version %>\n' +
-                ' * <%%= pkg.homepage %>\n' +
-                ' *\n' +
-                ' * Copyright (c) <%%= grunt.template.today("yyyy") %> <%%= pkg.author %>\n' +
-                ' * Released under the <%%= pkg.licenses[0].type %> license\n' +
-                ' * <%%= pkg.licenses[0].url %>\n' +
-                ' *\n' +
-                ' * Date: <%%= grunt.template.today("yyyy-mm-dd") %>\n' +
-                ' */\n',
-
-            // strict mode string
-            strict: '\'use strict\';\n\n'
+        // Project paths
+        scaffold: {
+            sourceDir: 'src/',
+            testDir: 'test/',
+            bowerDir: 'bower_components/',
+            buildRoot: 'build/',
+            tmpDir: 'build/.tmp/',
+            assetDir: 'build/.tmp/asset/',
+            concatDir: 'build/.tmp/concat/',
+            htmlDir: 'build/.tmp/html/',
+            distDir: 'build/dist/'
         },
 
-        /**
-         * dev + release tasks: jshint, palato, karma
-         */
+        // @todo use source maps!
+        // @todo concurrent task
+
+        clean: {
+            tmp: ['<%%= scaffold.tmpDir %>'],
+            fonts: ['<%%= scaffold.sourceDir %>asset/fonts/']
+        },
+
+        useminPrepare: {
+            html: '<%%= scaffold.sourceDir %>index.html',
+            options: {
+                staging: '<%%= scaffold.tmpDir %>',
+                dest: '<%%= scaffold.distDir %>'
+            }
+        },
+
+        usemin: {
+            html: '<%%= scaffold.htmlDir %>index.html'
+        },
+
+        ngmin: {
+            app: {
+                src: ['<%%= scaffold.concatDir %>js/app.js'],
+                dest: '<%%= scaffold.concatDir %>js/app.js'
+            }
+        },
+
+        html2js: {
+            app: {
+                options: {
+                    module: 'template.app',
+                    useStrict: true,
+                    quoteChar: '\'',
+                    indentString: '    ',
+                    htmlmin: {
+                        collapseBooleanAttributes: true,
+                        collapseWhitespace: true,
+                        removeAttributeQuotes: true,
+                        removeComments: true,
+                        removeEmptyAttributes: true,
+                        removeRedundantAttributes: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true
+                    }
+                },
+                src: ['<%%= scaffold.sourceDir %>app/**/*.tpl.html'],
+                dest: '<%%= scaffold.sourceDir %>app/module/template/template.js'
+            }
+        },
+
+        copy: {
+            fonts: {
+                // Bower fonts
+                cwd: '<%%= scaffold.bowerDir %>bootstrap/dist/',
+                src : ['fonts/*.*'],
+                dest: '<%%= scaffold.sourceDir %>asset/',
+                expand: true
+            },
+            tmp: {
+                files: [{
+                    // HTML index
+                    cwd: '<%%= scaffold.sourceDir %>',
+                    src: ['index.html'],
+                    dest: '<%%= scaffold.htmlDir %>',
+                    expand: true
+                }, {
+                    // Assets (fonts, img, ico)
+                    cwd: '<%%= scaffold.sourceDir %>',
+                    src : ['asset/**/*.*'],
+                    dest: '<%%= scaffold.tmpDir %>',
+                    expand: true
+                }]
+            },
+
+            dist: {
+                files: [{
+                    // HTML index and templates
+                    cwd: '<%%= scaffold.htmlDir %>',
+                    src : ['index.html'],
+                    dest: '<%%= scaffold.distDir %>',
+                    expand: true
+                }, {
+                    // Fonts and images
+                    cwd: '<%%= scaffold.assetDir %>',
+                    src : ['**'],
+                    dest: '<%%= scaffold.distDir %>',
+                    expand: true
+                }]
+            }
+        },
+
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
-                ignores: ['dist/lib/*', 'dist/src/**/*.min.js']
+                ignores: [
+                    '<%%= scaffold.concatDir %>**/vendor.js'
+                ]
             },
-            dev: [
-                'src/**/*.js',
-                'test/**/*.spec.js',
-                'test/**/*.scenario.js',
-                'test/**/*.conf.js',
+            default: [
+                '<%%= scaffold.sourceDir %>**/*.js',
+                '<%%= scaffold.testDir %>**/*.spec.js',
+                '<%%= scaffold.testDir %>**/*.scenario.js',
+                '<%%= scaffold.testDir %>**/*.conf.js',
                 'Gruntfile.js'
-            ],
-            release: [
-                'src/**/*.js'
-            ],
-            afterconcat: [
-                'dist/src/**/*.js'
             ]
         },
 
-        plato: {
-            dev: {
-                options: {
-                    jshint: grunt.file.readJSON('.jshintrc')
-                },
-                files: {
-                    'reports': [
-                        'src/**/*.js',
-                        'test/unit/**/*.js',
-                        'test/e2e/**/*.js'
-                    ]
-                }
-            }
-        },
-
         karma: {
+            default: {
+                configFile: 'test/config/karma.unit.conf.js',
+                browsers: ['PhantomJS']
+            },
             unit: {
-                configFile: 'test/config/karma.unit.conf.js',
-                autoWatch: false,
-                singleRun: true
-            },
-            e2e: {
-                configFile: 'test/config/karma.e2e.conf.js',
-                autoWatch: false,
-                singleRun: true
-            },
-            dev: {
-                configFile: 'test/config/karma.unit.conf.js',
-                browsers: ['PhantomJS'], // Only PhantomJS!
-                autoWatch: false,
-                singleRun: true
-            },
-            watch: {
-                configFile: 'test/config/karma.unit.conf.js',
-                browsers: ['PhantomJS'], // Only PhantomJS!
-                autoWatch: true,
-                singleRun: false
-            }
-        },
-
-        /**
-         * dev tasks: watch, connect, open
-         */
-        watch: {
-            dev: {
-                options: {
-                    livereload: true,
-                    spawn: false
-                },
-                files: [
-                    'src/index.html',
-                    'src/app/**/*.tpl.html',
-                    'src/less/*.less',
-                    'src/**/*.js',
-                    'Gruntfile.js',
-                    'bower.json'
-                ],
-                tasks: [
-                    'dev'
-                ]
-            },
-            test: {
-                options: {
-                    spawn: false
-                },
-                files: [
-                    'src/**/*.js',
-                    'test/**/*.spec.js',
-                    'test/**/*unit.conf.js'
-                ],
-                tasks: [
-                    'dev',
-                    'karma:dev'
-                ]
+                configFile: 'test/config/karma.unit.conf.js'
             }
         },
 
@@ -231,9 +147,9 @@ module.exports = function (grunt) {
                 hostname: 'localhost',
                 port: 8080
             },
-            dev: {
+            default: {
                 options: {
-                    base: 'dist/',
+                    base: '<%%= scaffold.distDir %>',
                     open: true,
                     middleware: function (connect, options) {
                         return [
@@ -242,337 +158,61 @@ module.exports = function (grunt) {
                         ];
                     }
                 }
-            },
-            release: {
-                options: {
-                    base: 'release/',
-                    keepalive: true,
-                    open: true,
-                    middleware: function (connect, options) {
-                        return [
-                            connect.static(options.base)
-                        ];
-                    }
-                }
-            },
-            testDev: {
-                options: {
-                    base: 'dist/',
-                    middleware: function (connect, options) {
-                        return [
-                            connect.static(options.base)
-                        ];
-                    }
-                }
-            },
-            testRelease: {
-                options: {
-                    base: 'release/',
-                    middleware: function (connect, options) {
-                        return [
-                            connect.static(options.base)
-                        ];
-                    }
-                }
             }
         },
 
-        open: {
-            dev: {
-                path: 'http://localhost:8888/'
-            },
-            release: {
-                path: 'http://localhost:8080/'
-            }
-        },
-
-        /**
-         * build tasks: clean, copy, modernizr, concat, recess, uglify
-         */
-        clean: {
-            // delete dist folder
-            dist: ['dist'],
-            // delete release folder
-            release: ['release'],
-            // delete all unminified sources from dist/
-            unmin: [
-                'dist/script/app.js',
-                'dist/lib/angular.js',
-                <% if (ngRoute) { %>'dist/lib/angular-route.js',<% } %>
-                <% if (ngCookies) { %>'dist/lib/angular-cookies.js',<% } %>
-                <% if (ngMock) { %>'dist/lib/angular-mocks.js',<% } %>
-                <% if (ngAnimate) { %>'dist/lib/angular-animate.js',<% } %>
-                <% if (ngTouch) { %>'dist/lib/angular-touch.js',<% } %>
-                <% if (jquery) { %>'dist/lib/jquery.js',<% } %>
-                <% if (underscore) { %>'dist/lib/underscore.js',<% } %>
-                <% if (underscoreString) { %>'dist/lib/underscore.string.js',<% } %>
-                <% if (lodash) { %>'dist/lib/lodash.js',<% } %>
-                <% if (momentjs) { %>'dist/lib/moment.js',<% } %>
-                'dist/lib/bootstrap.js',
-                'dist/lib/modernizr.js'
-            ]
-        },
-
-        copy: {
-            build: {
-                files: [{
-                    // copy index.html, robots.txt, license.txt
-                    cwd: 'src',
-                    src : ['*.txt'],
-                    dest: 'dist',
-                    expand: true
-                }, {
-                    // copy angular templates
-                    src: [
-                        'src/app/**/*.tpl.html'
-                    ],
-                    dest: 'dist/script/view/',
-                    expand: true,
-                    flatten: true
-                }, {
-                    // copy content of asset dir
-                    cwd: 'src/asset',
-                    src : '**',
-                    dest: 'dist',
-                    expand: true
-                }, {
-                    // copy bower_components: Bootstrap (fonts)
-                    cwd: 'bower_components/bootstrap/dist/fonts',
-                    src : ['*'],
-                    dest: 'dist/fonts',
-                    expand: true
-                }, {
-                    // copy bower_components: Bootstrap (css)
-                    cwd: 'bower_components/bootstrap/dist/css',
-                    src : ['bootstrap.css', 'bootstrap.min.css'],
-                    dest: 'dist/css',
-                    expand: true
-                }, {
-                    // copy bower_components: Bootstrap (js)
-                    cwd: 'bower_components/bootstrap/dist/js',
-                    src : ['*.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }, {
-                    // copy bower_components: Angular
-                    cwd: 'bower_components/angular/',
-                    src : ['angular.js', 'angular.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% if (ngRoute) { %>, {
-                    // copy bower_components: ngRoute
-                    cwd: 'bower_components/angular-route/',
-                    src : ['angular-route.js', 'angular-route.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (ngResource) { %>, {
-                    // copy bower_components: ngResource
-                    cwd: 'bower_components/angular-resource/',
-                    src : ['angular-resource.js', 'angular-resorce.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (ngCookies) { %>, {
-                    // copy bower_components: ngCookies
-                    cwd: 'bower_components/angular-cookies/',
-                    src : ['angular-cookies.js', 'angular-cookies.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (ngSanitize) { %>, {
-                    // copy bower_components: ngSanitize
-                    cwd: 'bower_components/angular-sanitize/',
-                    src : ['angular-sanitize.js', 'angular-sanitize.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (ngMock) { %>, {
-                    // copy bower_components: ngMock
-                    cwd: 'bower_components/angular-mocks/',
-                    src : ['angular-mocks.js', 'angular-mocks.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (ngAnimate) { %>, {
-                    // copy bower_components: ngAnimate
-                    cwd: 'bower_components/angular-animate/',
-                    src : ['angular-animate.js', 'angular-animate.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (ngTouch) { %>, {
-                    // copy bower_components: ngTouch
-                    cwd: 'bower_components/angular-touch/',
-                    src : ['angular-touch.js', 'angular-touch.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (jquery) { %>, {
-                    // copy bower_components: jQuery
-                    cwd: 'bower_components/jquery/',
-                    src : ['jquery.js', 'jquery.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (underscore) { %>, {
-                    // copy bower_components: underscore
-                    cwd: 'bower_components/underscore/',
-                    src : ['underscore.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }, {
-                    // copy bower_components: underscore-min
-                    cwd: 'bower_components/underscore/',
-                    src : ['underscore-min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (underscoreString) { %>, {
-                    // copy bower_components: underscore.string
-                    cwd: 'bower_components/underscore.string/lib',
-                    src : ['underscore.string.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }, {
-                    // copy bower_components: underscore.string-min
-                    cwd: 'bower_components/underscore.string/dist',
-                    src : ['underscore.string.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (lodash) { %>, {
-                    // copy bower_components: lodash
-                    cwd: 'bower_components/lodash/dist/',
-                    src : ['lodash.js', 'lodash.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %><% if (momentjs) { %>, {
-                    // copy bower_components: moment
-                    cwd: 'bower_components/momentjs/',
-                    src : ['moment.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }, {
-                    // copy bower_components: moment-min
-                    cwd: 'bower_components/momentjs/min/',
-                    src : ['moment.min.js'],
-                    dest: 'dist/lib',
-                    expand: true
-                }<% } %>, {
-                    // copy bower_components: Modernizr
-                    src: 'bower_components/modernizr/modernizr.js',
-                    dest: 'dist/lib/modernizr.js'
-                }]
-            },
-            release: {
-                files: [{
-                    // copy contents of dist/ to release
-                    cwd: 'dist',
-                    src : ['**'],
-                    dest: 'release',
-                    expand: true
-                }]
-            }
-        },
-
-        modernizr: {
-            // generate a uglified version of modernizr.js
-            'devFile' : 'bower_components/modernizr/modernizr.js',
-            'outputFile' : 'dist/lib/modernizr.min.js',
-            'uglify' : true,
-            'tests' : [],
-            'parseFiles' : false,
-            'matchCommunityTests' : false,
-            'customTests' : [],
-            // based on default settings on http://modernizr.com/download/
-            'extra' : {
-                'cssclasses' : true,
-                'shiv' : true,
-                'printshiv' : true,
-                'load' : false,
-                'mq' : false
-            },
-            // based on default settings on http://modernizr.com/download/
-            'extensibility' : {
-                'addtest' : false,
-                'prefixed' : false,
-                'teststyles' : false,
-                'testprops' : false,
-                'testallprops' : false,
-                'hasevents' : false,
-                'prefixes' : false,
-                'domprefixes' : false
-            }
-        },
-
-        concat: {
-            // concat all src/app js files and compiled templates
-            index: {
+        watch: {
+            default: {
                 options: {
-                    process: true
+                    livereload: true
                 },
-                files: {
-                    'dist/index.html': ['src/index.html']
-                }
-            },
-            build: {
-                options: {
-                    nonull: true,
-                    separator: '\n\n',
-                    stripBanners: true,
-                    // add doc block (banner) and 'use strict' statement
-                    banner: '<%%= meta.banner %>' + '<%%= meta.strict %>',
-                    // replace all 'use strict' statements
-                    process: function (src) {
-                        return  src.replace(
-                            /(^|\n)([ \t]*)('use strict'|"use strict");?\s*/g,
-                            '$1$2'
-                        );
-                    }
-                },
-                files: {
-                    'dist/script/app.js': ['src/**/*.js']
-                }
-            }
-        },
-
-        recess: {
-            options: {
-                noIDs: false,
-                noJSPrefix: false,
-                noOverqualifying: false
-            },
-            compile: {
-                // lint and compile less files
-                files: {
-                    'dist/css/app.css': ['src/less/*.less']
-                },
-                options: {
-                    compile: true
-                }
-            },
-            compress: {
-                // lint, compile and compress less files
-                files: {
-                    'dist/css/app.min.css': ['dist/css/app.css']
-                },
-                options: {
-                    compress: true
-                }
-            }
-        },
-
-        uglify: {
-            options: {
-                mangle: true,
-                report: 'min',
-                wrap: 'global',
-                exportAll: true,
-                compress: {
-                    dead_code: false,
-                    unused: false
-                }
-            },
-            // app.js
-            app: {
-                options: {
-                    banner: '<%%= meta.banner %>'
-                },
-                files: {
-                    'dist/script/app.min.js': ['dist/script/app.js']
-                }
+                files: [
+                    '<%%= scaffold.sourceDir %>index.html',
+                    '<%%= scaffold.sourceDir %>app/**/*.tpl.html',
+                    '<%%= scaffold.sourceDir %>css/*.css',
+                    '<%%= scaffold.sourceDir %>**/*.js',
+                    'Gruntfile.js'
+                ],
+                tasks: [
+                    'build'
+                ]
             }
         }
     });
+
+    // Task registration
+    grunt.registerTask('default', ['server']);
+
+    grunt.registerTask('prepare', [
+        'clean',
+        'copy:fonts',
+        'html2js',
+        'useminPrepare',
+        'copy:tmp',
+        'concat'
+    ]);
+
+    grunt.registerTask('build', [
+        'prepare',
+        'jshint',
+        'karma:default',
+        'ngmin',
+        'uglify',
+        'cssmin',
+        'usemin',
+        'copy:dist',
+        'clean:fonts'
+    ]);
+
+    grunt.registerTask('server', [
+        'build',
+        'connect',
+        'watch'
+    ]);
+
+    grunt.registerTask('release', [
+        'build',
+        'karma:unit',
+        'clean:tmp'
+    ]);
 };

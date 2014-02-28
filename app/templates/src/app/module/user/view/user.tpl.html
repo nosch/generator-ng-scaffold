@@ -1,0 +1,12 @@
+<div class="page-header">
+    <h1>{{heading}}</h1>
+</div>
+
+<ul class="nav nav-tabs">
+    <li ui-sref-active="active"
+        ng-repeat="module in userModules">
+        <a ui-sref="{{module.sref}}">{{module.title}}</a>
+    </li>
+</ul>
+
+<div id="user-modules" ui-view></div>

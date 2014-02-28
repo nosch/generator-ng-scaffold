@@ -6,11 +6,10 @@ angular.module('user', [
         'user.config'
     ])
 
-    .controller('UserCtrl', [
-        '$scope',
-        function ($scope) {
-            'use strict';
+    .controller('UserCtrl', function ($scope, USER_MODULES) {
+        'use strict';
 
-            $scope.mainHeading = 'My account!';
-        }
-    ]);
+        $scope.userModules = USER_MODULES;
+
+        $scope.heading = 'My account!';
+    });

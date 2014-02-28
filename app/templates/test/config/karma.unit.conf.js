@@ -1,4 +1,6 @@
 // Karma configuration: Unit Tests
+// Generated on Mon Aug 19 2013 10:31:57 GMT+0200 (CEST)
+
 module.exports = function (config) {
     'use strict';
 
@@ -13,14 +15,9 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'bower_components/angular/angular.js'<% if (ngRoute) { %>,
-            'bower_components/angular-route/angular-route.js'<% } %><% if (ngResource) { %>,
-            'bower_components/angular-resource/angular-resource.js'<% } %><% if (ngSanitize) { %>,
-            'bower_components/angular-sanitize/angular-sanitize.js'<% } %><% if (ngCookies) { %>,
-            'bower_components/angular-cookies/angular-cookies.js'<% } %><% if (ngMock) { %>,
-            'bower_components/angular-mocks/angular-mocks.js'<% } %><% if (ngAnimate) { %>,
-            'bower_components/angular-animate/angular-animate.js'<% } %><% if (ngTouch) { %>,
-            'bower_components/angular-touch/angular-touch.js'<% } %>,
+            'bower_components/angular/angular.js',
+            'bower_components/angular-ui-router/release/angular-ui-router.js',
+            'bower_components/angular-mocks/angular-mocks.js',
             'src/**/*.js',
             'test/unit/**/*.spec.js'
         ],
@@ -31,19 +28,19 @@ module.exports = function (config) {
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
         reporters: [
-            'progress',
-            'coverage'
+            'progress'
+            // 'coverage'
         ],
 
         // add preprocessors
         preprocessors: {
-            'src/**/*.js': ['coverage']
+            // 'src/**/*.js': ['coverage']
         },
 
         // configure code coverage
         coverageReporter: {
-            type : 'html',
-            dir : 'test/coverage/'
+            // type : 'html'
+            // dir : 'test/coverage/'
         },
 
         // web server port
@@ -86,8 +83,7 @@ module.exports = function (config) {
         // - IE (only Windows)
         browsers: [
             'Chrome',
-            'Firefox',
-            'PhantomJS'
+            'Firefox'
         ],
 
         // If browser does not capture in given timeout [ms], kill it

@@ -1,32 +1,26 @@
 /**
  * <%= appName %>
- * @module <%= _.camelize(appName) %>
+ * @module application
  */
 angular.module('<%= _.camelize(appName) %>', [
         '<%= _.camelize(appName) %>.config'
     ])
 
-    .controller('ApplicationCtrl', [
-        '$scope',
-        function ($scope) {
-            'use strict';
+    .run(function ($rootScope, $state, $stateParams) {
+        'use strict';
 
-            $scope.heading = '<%= appName %>!';
-        }
-    ])
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    })
 
-    .controller('HeaderCtrl', [
-        '$scope',
-        'NAV_ITEMS',
-        function ($scope, navItems) {
-            'use strict';
+    .controller('NavigationCtrl', function ($scope, NAV_ITEMS) {
+        'use strict';
 
-            $scope.navItems = navItems;
+        $scope.navItems = NAV_ITEMS;
+    })
 
-            $scope.$on('$routeChangeSuccess', function (eOpts, currentRoute) {
-                if (currentRoute.$$route) {
-                    $scope.currentRoute = currentRoute.$$route;
-                }
-            });
-        }
-    ]);
+    .controller('HomeCtrl', function ($scope) {
+        'use strict';
+
+        $scope.heading = '<%= appName %>';
+    });

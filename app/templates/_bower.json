@@ -1,21 +1,12 @@
 {
-    "name": "<%= _.slugify(appName) %>",
-    "version": "0.0.1",
+   "name": "<%= _.slugify(appName) %>",
+    "version": "0.0.0",
     "dependencies": {},
     "devDependencies": {
-        "angular": "1.2.10"<% if (ngRoute) { %>,
-        "angular-route": "1.2.10"<% } %><% if (ngResource) { %>,
-        "angular-resource": "1.2.10"<% } %><% if (ngSanitize) { %>,
-        "angular-sanitize": "1.2.10"<% } %><% if (ngCookies) { %>,
-        "angular-cookies": "1.2.10"<% } %><% if (ngMock) { %>,
-        "angular-mocks": "1.2.10"<% } %><% if (ngAnimate) { %>,
-        "angular-animate": "1.2.10"<% } %><% if (ngTouch) { %>,
-        "angular-touch": "1.2.10"<% } %><% if (jquery) { %>,
-        "jquery": ">= 2.1.0"<% } %><% if (underscore) { %>,
-        "underscore": "latest"<% } %><% if (underscoreString) { %>,
-        "underscore.string": "latest"<% } %><% if (lodash) { %>,
-        "lodash": "latest"<% } %><% if (momentjs) { %>,
-        "momentjs": "latest"<% } %>,
+        "angular": "1.2.12",
+        "angular-mocks": "1.2.12",
+        "angular-ui-router": "0.2.8-bowratic-tedium",
+        "jquery": ">= 2.1.0",
         "modernizr": "latest",
         "bootstrap": ">= 3.0.3"
     }

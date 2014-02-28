@@ -4,31 +4,42 @@
  */
 angular.module('user.config', [
         'user.dashboard',
-        'user.account',
+        'user.settings',
         'user.profile',
-        <%= ngModules %>
+        'ui.router'
     ])
 
-    .config([
-        '$routeProvider',
-        function ($routeProvider) {
-            'use strict';
+    .constant('USER_MODULES', [
+        {title: 'Dashboard', state: 'user.dashboard', sref: 'user.dashboard', icon: ''},
+        {title: 'Settings', state: 'user.settings', sref: 'user.settings', icon: ''},
+        {title: 'Profile', state: 'user.profile', sref: 'user.profile', icon: ''}
+    ])
 
-            $routeProvider
-                .when('/user/dashboard', {
-                    index: 'user',
-                    templateUrl: '/script/view/dashboard.tpl.html',
-                    controller: 'UserCtrl'
-                })
-                .when('/user/account', {
-                    index: 'user',
-                    templateUrl: '/script/view/account.tpl.html',
-                    controller: 'UserCtrl'
-                })
-                .when('/user/profile', {
-                    index: 'user',
-                    templateUrl: '/script/view/profile.tpl.html',
-                    controller: 'UserCtrl'
-                });
-        }
-    ]);
+    .config(function ($stateProvider, $urlRouterProvider) {
+        'use strict';
+
+        $urlRouterProvider.otherwise('/user');
+
+        $stateProvider
+            .state('user', {
+                url: '/user',
+                templateUrl: 'app/module/user/view/user.tpl.html',
+                controller: 'UserCtrl',
+                abstract: true
+            })
+            .state('user.dashboard', {
+                url: '/dashboard',
+                templateUrl: 'app/module/user/view/user-dashboard.tpl.html',
+                controller: 'UserCtrl'
+            })
+            .state('user.settings', {
+                url: '/settings',
+                templateUrl: 'app/module/user/view/user-settings.tpl.html',
+                controller: 'UserCtrl'
+            })
+            .state('user.profile', {
+                url: '/profile',
+                templateUrl: 'app/module/user/view/user-profile.tpl.html',
+                controller: 'UserCtrl'
+            });
+    });

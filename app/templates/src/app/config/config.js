@@ -4,37 +4,34 @@
  */
 angular.module('<%= _.camelize(appName) %>.config', [
         'user',
-        <%= ngModules %>
+        'ui.router',
+        'template.app'
     ])
 
     .constant('NAV_ITEMS', [
-        {title: 'Home', index: 'home', hash: '#home', icon: 'glyphicon-home'},
-        {title: 'About', index: 'about', hash: '#about', icon: 'glyphicon-info-sign'},
-        {title: 'Contact', index: 'contact', hash: '#contact', icon: 'glyphicon-earphone'},
-        {title: 'My account', index: 'user', hash: '#user/dashboard', icon: 'glyphicon-user'}
+        {title: 'Home', state: 'home', sref: 'home', icon: 'glyphicon-home'},
+        {title: 'About', state: 'about', sref: 'about', icon: 'glyphicon-info-sign'},
+        {title: 'Contact', state: 'contact', sref: 'contact', icon: 'glyphicon-earphone'},
+        {title: 'My account', state: 'user', sref: 'user.dashboard', icon: 'glyphicon-user'}
     ])
 
-    .config([
-        '$routeProvider',
-        function ($routeProvider) {
-            'use strict';
+    .config(function ($stateProvider, $urlRouterProvider) {
+        'use strict';
 
-            $routeProvider
-                .when('/home', {
-                    index: 'home',
-                    templateUrl: '/script/view/home.tpl.html',
-                    controller: 'ApplicationCtrl'
-                })
-                .when('/about', {
-                    index: 'about',
-                    templateUrl: '/script/view/about.tpl.html'
-                })
-                .when('/contact', {
-                    index: 'contact',
-                    templateUrl: '/script/view/contact.tpl.html'
-                })
-                .otherwise({
-                    redirectTo: '/home'
-                });
-        }
-    ]);
+        $urlRouterProvider.otherwise('/home');
+
+        $stateProvider
+            .state('home', {
+                url: '/home',
+                templateUrl: 'app/view/home.tpl.html',
+                controller: 'HomeCtrl'
+            })
+            .state('about', {
+                url: '/about',
+                templateUrl: 'app/view/about.tpl.html'
+            })
+            .state('contact', {
+                url: '/contact',
+                templateUrl: 'app/view/contact.tpl.html'
+            });
+    });
