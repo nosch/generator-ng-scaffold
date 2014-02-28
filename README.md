@@ -14,7 +14,7 @@ A [yeoman](http://yeoman.io) generator for AngularJS web applications. Based on 
 
 1. $ mkdir [my-angular-app] && cd $_
 2. $ yo ng-scaffold
-3. $ grunt dev-server (grunt test, grunt release)
+3. $ grunt (grunt release)
 
 ## To-Do
 
