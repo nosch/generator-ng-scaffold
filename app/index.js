@@ -10,10 +10,13 @@ var Generator = module.exports = function NgScaffoldGenerator(args, options, con
 
     this.on('end', function () {
         this.config.set('appName', this.appName);
+        this.config.set('configDir', 'src/app/config/');
         this.config.set('moduleDir', 'src/app/module/');
-        this.config.set('configDir','config/');
-        this.config.set('serviceDir','service/');
-        this.config.set('viewDir','view/');
+        this.config.set('serviceDir', 'src/app/service/');
+        this.config.set('viewDir', 'src/app/view/');
+        this.config.set('moduleConfigDir','config/');
+        this.config.set('moduleServiceDir','service/');
+        this.config.set('moduleViewDir','view/');
         this.config.save();
 
         this.installDependencies({ skipInstall: options['skip-install'] });

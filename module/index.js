@@ -38,6 +38,7 @@ ModuleGenerator.prototype.askForDirName = function askForDirName() {
 
     this.prompt(prompts, function (props) {
         this.dirName = _.slugify(props.dirName);
+        this.fileName = this.dirName;
 
         cb();
     }.bind(this));
@@ -45,18 +46,18 @@ ModuleGenerator.prototype.askForDirName = function askForDirName() {
 
 ModuleGenerator.prototype.createModule = function createModule() {
     var moduleDir = this.config.get('moduleDir') + this.dirName + '/';
-    var configDir = moduleDir + this.config.get('configDir');
-    var serviceDir = moduleDir + this.config.get('serviceDir');
-    var viewDir = moduleDir + this.config.get('viewDir');
+    var configDir = moduleDir + this.config.get('moduleConfigDir');
+    var serviceDir = moduleDir + this.config.get('moduleServiceDir');
+    var viewDir = moduleDir + this.config.get('moduleViewDir');
 
     this.mkdir(moduleDir);
     this.mkdir(configDir);
     this.mkdir(serviceDir);
     this.mkdir(viewDir);
 
-    this.template('_module.js', moduleDir + _.slugify(this.moduleName) + '.js');
+    this.template('_module.js', moduleDir + this.fileName + '.js');
     this.template('_module-config.js', configDir + 'config.js');
-    this.template('_module.tpl.html', viewDir + _.slugify(this.moduleName) + '.tpl.html');
+    this.template('_module.tpl.html', viewDir + this.fileName + '.tpl.html');
 
     this.copy('gitkeep', serviceDir + '.gitkeep');
 };
