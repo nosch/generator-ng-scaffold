@@ -45,6 +45,7 @@ Generator.prototype.app = function app() {
 };
 
 Generator.prototype.projectfolders = function projectfolders() {
+    this.directory('.\/build', 'build', true);
     this.directory('.\/src', 'src', true);
     this.directory('.\/test', 'test', true);
 };
