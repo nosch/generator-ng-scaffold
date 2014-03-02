@@ -23,6 +23,7 @@ ServiceGenerator.prototype.askForServiceName = function askForServiceName() {
 
     this.prompt(prompts, function (props) {
         this.serviceName = _.camelize(props.serviceName);
+        this.fileName = _.slugify(props.serviceName);
 
         cb();
     }.bind(this));
@@ -31,5 +32,5 @@ ServiceGenerator.prototype.askForServiceName = function askForServiceName() {
 ServiceGenerator.prototype.createService = function createService() {
     var serviceDir = this.config.get('serviceDir');
 
-    this.template('_service.js', serviceDir + this.serviceName + '.js');
+    this.template('_service.js', serviceDir + this.fileName + '.js');
 };
