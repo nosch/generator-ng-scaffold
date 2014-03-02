@@ -13,3 +13,5 @@ src/app/module/template/*
 
 reports
 test/coverage
+
+.yo-rc.json
