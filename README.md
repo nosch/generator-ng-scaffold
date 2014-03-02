@@ -1,6 +1,6 @@
 # generator-ng-scaffold
 
-This is a [yeoman](http://yeoman.io) generator for an **AngularJS web application**. It's based on [ng-scaffold](http://github.com/nosch/ng-scaffold). So the generated files are **organized in modules** and not "by layer". It also provides a build, test and basic deployment process based on Grunt, Bower and Karma.
+This is a [yeoman](http://yeoman.io) generator for an **AngularJS application scaffold**. It's based on [ng-scaffold](http://github.com/nosch/ng-scaffold). So the generated files are **organized in modules** and not "by layer". It also provides a build, test and basic deployment process based on Grunt, Bower and Karma.
 
 In addition to the **main generator** (yo ng-scaffold) for the entire application there are two **sub-generators**. One (yo ng-scaffold:module) is for a new application module, and the other (yo ng-scaffold:service) is for generating an application-wide service.
 
