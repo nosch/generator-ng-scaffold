@@ -1,6 +1,6 @@
 /**
  * <%= appName %>
- * @module application
+ * @module <%= _.camelize(appName) %>
  */
 angular.module('<%= _.camelize(appName) %>', [
         '<%= _.camelize(appName) %>.config'
