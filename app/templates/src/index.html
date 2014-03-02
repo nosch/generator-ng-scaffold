@@ -41,7 +41,12 @@
         <script src="../bower_components/underscore.string/lib/underscore.string.js"></script>
         <script src="../bower_components/momentjs/moment.js"></script>
         <script src="../bower_components/angular/angular.js"></script>
-        <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script><% if (ngAnimate) { %>
+        <script src="../bower_components/angular-animate/angular-animate.js"></script><% } %><% if (ngCookies) { %>
+        <script src="../bower_components/angular-cookies/angular-cookies.js"></script><% } %><% if (ngResource) { %>
+        <script src="../bower_components/angular-resource/angular-resource.js"></script><% } %><% if (ngSanitize) { %>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script><% } %><% if (ngTouch) { %>
+        <script src="../bower_components/angular-touch/angular-touch.js"></script><% } %>
         <!-- endbuild -->
 
         <!-- build:js js/app.js -->

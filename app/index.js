@@ -46,6 +46,83 @@ Generator.prototype.askForAppName = function askForAppName() {
     }.bind(this));
 };
 
+Generator.prototype.askForModules = function askForModules() {
+    var cb = this.async();
+
+    var prompts = [{
+        type: 'checkbox',
+        name: 'ngModules',
+        message: 'Which Angular modules would you like to include?',
+        choices: [{
+            value: 'ngAnimate',
+            name: 'angular-animate',
+            checked: false
+        }, {
+            value: 'ngCookies',
+            name: 'angular-cookies',
+            checked: false
+        }, {
+            value: 'ngResource',
+            name: 'angular-resource',
+            checked: false
+        }, {
+            value: 'ngSanitize',
+            name: 'angular-sanitize',
+            checked: false
+        }, {
+            value: 'ngTouch',
+            name: 'angular-touch',
+            checked: false
+        }]
+    }];
+
+    this.prompt(prompts, function (props) {
+        this.ngModules = '';
+
+        var hasModule = function (mod) {
+            if (props.ngModules) {
+                return props.ngModules.indexOf(mod) !== -1;
+            }
+
+            return false;
+        };
+
+        this.ngAnimate = hasModule('ngAnimate');
+        this.ngCookies = hasModule('ngCookies');
+        this.ngResource = hasModule('ngResource');
+        this.ngSanitize = hasModule('ngSanitize');
+        this.ngTouch = hasModule('ngTouch');
+
+        var modules = [];
+
+        if (this.ngAnimate) {
+            modules.push('\'ngAnimate\'');
+        }
+
+        if (this.ngCookies) {
+            modules.push('\'ngCookies\'');
+        }
+
+        if (this.ngResource) {
+            modules.push('\'ngResource\'');
+        }
+
+        if (this.ngSanitize) {
+            modules.push('\'ngSanitize\'');
+        }
+
+        if (this.ngTouch) {
+            modules.push('\'ngTouch\'');
+        }
+
+        if (Array.isArray(modules) && modules.length) {
+            this.ngModules = modules.join(",\n        ");
+        }
+
+        cb();
+    }.bind(this));
+};
+
 // Directories and templates
 Generator.prototype.processConfigFiles = function processConfigFiles() {
     this.template('Gruntfile.js', 'Gruntfile.js');
