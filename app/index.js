@@ -4,7 +4,6 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 
-
 var Generator = module.exports = function NgScaffoldGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
 
