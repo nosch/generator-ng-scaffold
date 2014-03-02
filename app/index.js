@@ -77,7 +77,7 @@ Generator.prototype.askForModules = function askForModules() {
     }];
 
     this.prompt(prompts, function (props) {
-        this.ngModules = '';
+        this.ngModules = false;
 
         var hasModule = function (mod) {
             if (props.ngModules) {
