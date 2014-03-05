@@ -1,7 +1,15 @@
 language: node_js
 node_js:
-  - '0.10'
+- '0.10'
 before_install:
-  - currentfolder=${PWD##*/}
-  - if [ "$currentfolder" != 'generator-ng-scaffold' ]; then cd .. && eval "mv $currentfolder generator-ng-scaffold" && cd generator-ng-scaffold; fi
-
+- currentfolder=${PWD##*/}
+- if [ "$currentfolder" != 'generator-ng-scaffold' ]; then cd .. && eval "mv $currentfolder
+  generator-ng-scaffold" && cd generator-ng-scaffold; fi
+deploy:
+  provider: npm
+  email: norbert.schmidt@mayflower.de
+  api_key:
+    secure: O/5ySMUm90dznpxdu8C7fg1vZK4daN8vxTEyYhkPYLiFWclhFYxGrIH3jEwlkGSo2dxNkdTrfaf5oNAG8cJKH1J5Fm0oJu+dB+surSVzZMjInaRUOZKol6+hlfkKjFqbR8TsQ/qZzgFezGLCjO3q0hhsJLywnefZ5FXHLmPEqXE=
+  on:
+    tags: true
+    repo: nosch/generator-ng-scaffold
