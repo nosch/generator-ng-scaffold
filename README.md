@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rouault/gdal_coverage.png)](https://travis-ci.org/rouault/gdal_coverage)
+
 # generator-ng-scaffold
 
 This is a [yeoman](http://yeoman.io) generator for an **AngularJS application scaffold**. It's based on [ng-scaffold](http://github.com/nosch/ng-scaffold). So the generated files are **organized in modules** and not "by layer". It also provides a build, test and basic deployment process based on Grunt, Bower and Karma.
