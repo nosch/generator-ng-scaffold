@@ -1,6 +1,6 @@
 {
     "name": "generator-ng-scaffold",
-    "version": "0.2.6",
+    "version": "0.2.8",
     "description": "A yeoman generator for an AngularJS application scaffold.",
     "keywords": [
         "yeoman-generator",
