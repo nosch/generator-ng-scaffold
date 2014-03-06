@@ -9,13 +9,6 @@ var Generator = module.exports = function NgScaffoldGenerator(args, options, con
 
     this.on('end', function () {
         this.config.set('appName', this.appName);
-        this.config.set('configDir', 'src/app/config/');
-        this.config.set('moduleDir', 'src/app/module/');
-        this.config.set('serviceDir', 'src/app/service/');
-        this.config.set('viewDir', 'src/app/view/');
-        this.config.set('moduleConfigDir','config/');
-        this.config.set('moduleServiceDir','service/');
-        this.config.set('moduleViewDir','view/');
         this.config.save();
 
         this.installDependencies({ skipInstall: options['skip-install'] });
@@ -159,7 +152,6 @@ Generator.prototype.generateApp = function generateApp() {
     this.template('.\/src\/app\/module\/user\/view\/user-dashboard.tpl.html', 'src/app/module/user/view/user-dashboard.tpl.html');
     this.template('.\/src\/app\/module\/user\/view\/user-profile.tpl.html', 'src/app/module/user/view/user-profile.tpl.html');
     this.template('.\/src\/app\/module\/user\/view\/user-settings.tpl.html', 'src/app/module/user/view/user-settings.tpl.html');
-    this.template('.\/src\/app\/service\/.gitkeep', 'src/app/service/.gitkeep');
     this.template('.\/src\/app\/view\/about.tpl.html', 'src/app/view/about.tpl.html');
     this.template('.\/src\/app\/view\/contact.tpl.html', 'src/app/view/contact.tpl.html');
     this.template('.\/src\/app\/view\/footer.tpl.html', 'src/app/view/footer.tpl.html');
