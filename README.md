@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rouault/gdal_coverage.png)](https://travis-ci.org/rouault/gdal_coverage)
+[![Build Status](https://travis-ci.org/nosch/generator-ng-scaffold.png?branch=master)](https://travis-ci.org/nosch/generator-ng-scaffold)
 
 # generator-ng-scaffold
 
