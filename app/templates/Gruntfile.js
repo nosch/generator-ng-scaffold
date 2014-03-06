@@ -12,6 +12,20 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        meta: {
+            banner:
+                '/**\n' +
+                    ' * <%%= pkg.name %> v<%= pkg.version %>\n' +
+                    ' * <%%= pkg.homepage %>\n' +
+                    ' *\n' +
+                    ' * Copyright (c) <%%= grunt.template.today("yyyy") %> <%%= pkg.author %>\n' +
+                    ' * Released under the <%%= pkg.licenses[0].type %> license\n' +
+                    ' * <%%= pkg.licenses[0].url %>\n' +
+                    ' *\n' +
+                    ' * Date: <%%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                    ' */\n'
+        },
+
         // Project paths
         scaffold: {
             sourceDir: 'src/',
@@ -24,9 +38,6 @@ module.exports = function (grunt) {
             htmlDir: 'build/.tmp/html/',
             distDir: 'build/dist/'
         },
-
-        // @todo use source maps!
-        // @todo concurrent task
 
         clean: {
             tmp: ['<%%= scaffold.tmpDir %>'],
@@ -49,6 +60,23 @@ module.exports = function (grunt) {
             app: {
                 src: ['<%%= scaffold.concatDir %>js/app.js'],
                 dest: '<%%= scaffold.concatDir %>js/app.js'
+            }
+        },
+
+        uglify: {
+            options: {
+                banner: '<%%= meta.banner %>',
+                mangle: true,
+                compress: true,
+                sourceMap: true,
+                sourceMapIncludeSources: true
+            }
+        },
+
+        cssmin: {
+            options: {
+                banner: '<%%= meta.banner %>',
+                keepSpecialComments: 0
             }
         },
 
