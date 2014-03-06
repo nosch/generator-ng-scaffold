@@ -30,7 +30,5 @@ ServiceGenerator.prototype.askForServiceName = function askForServiceName() {
 };
 
 ServiceGenerator.prototype.createService = function createService() {
-    var serviceDir = this.config.get('serviceDir');
-
-    this.template('_service.js', serviceDir + this.fileName + '.js');
+    this.template('_service/_service.js', 'src/app/service/' + this.fileName + '.js');
 };
