@@ -25,9 +25,11 @@ npm install -g generator-ng-scaffold
 ### Application
 
 - AngularJS v1.2.14
+- Twitter Bootstrap v3.1.1
 - UI-Router v0.2.9
 - jQuery v2.1.0
-- Twitter Bootstrap v3.1.1
+- Underscore.js v1.6.0
+- Moment.js v2.5.1
 - Modernizr v2.7.1
 
 ### Build process
