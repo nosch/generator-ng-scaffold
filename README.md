@@ -34,6 +34,6 @@ npm install -g generator-ng-scaffold
 
 ### Build process
 
-- Grunt v0.4.2
-- Bower v1.2.8
-- Karma v0.10.9
+- Grunt v0.4.4
+- Bower v1.3.1
+- Karma v0.12.0
