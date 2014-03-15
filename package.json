@@ -36,11 +36,11 @@
         "mocha": "*"
     },
     "peerDependencies": {
-        "yo": ">=1.0.0"
+        "yo": ">=1.1.2"
     },
     "engines": {
-        "node": ">=0.8.0",
-        "npm": ">=1.2.10"
+        "node": ">=0.10.25",
+        "npm": ">=1.4.2"
     },
     "licenses": [
         {

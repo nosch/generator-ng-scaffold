@@ -15,7 +15,8 @@
     }
     ],
     "engines": {
-        "node": ">= 0.10.12"
+        "node": ">=0.10.25",
+        "npm": ">=1.4.2"
     },
     "dependencies": {},
     "devDependencies": {
