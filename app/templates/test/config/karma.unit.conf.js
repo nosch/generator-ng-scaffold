@@ -34,19 +34,7 @@ module.exports = function (config) {
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
         reporters: [
             'progress'
-            // 'coverage'
         ],
-
-        // add preprocessors
-        preprocessors: {
-            // 'src/**/*.js': ['coverage']
-        },
-
-        // configure code coverage
-        coverageReporter: {
-            // type : 'html'
-            // dir : 'test/coverage/'
-        },
 
         // web server port
         port: 6789,
@@ -87,6 +75,7 @@ module.exports = function (config) {
         // - PhantomJS
         // - IE (only Windows)
         browsers: [
+            'PhantomJS',
             'Chrome',
             'Firefox'
         ],

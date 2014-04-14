@@ -167,6 +167,19 @@ module.exports = function (grunt) {
             },
             unit: {
                 configFile: 'test/config/karma.unit.conf.js'
+            },
+            coverage: {
+                configFile: 'test/config/karma.unit.conf.js',
+                reporters: [
+                    'coverage'
+                ],
+                preprocessors: {
+                    'src/**/*.js': ['coverage']
+                },
+                coverageReporter: {
+                    type : 'html',
+                    dir : 'test/coverage/'
+                }
             }
         },
 
@@ -230,6 +243,11 @@ module.exports = function (grunt) {
         'usemin',
         'copy:dist',
         'clean:fonts'
+    ]);
+
+    grunt.registerTask('coverage', [
+        'build',
+        'karma:coverage'
     ]);
 
     grunt.registerTask('server', [
