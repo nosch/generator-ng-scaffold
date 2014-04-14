@@ -10,18 +10,17 @@ In addition to the **main generator** (yo ng-scaffold) for the entire applicatio
 
 npm install -g generator-ng-scaffold
 
-## Usage
-
-1. $ mkdir [my-angular-app] && cd $_
-2. $ yo ng-scaffold | yo ng-scaffold:module | yo ng-scaffold:service
-3. $ grunt | grunt release
-
 ## Dependencies
 
 1. Install [node.js and npm](http://nodejs.org/download/ "Download node.js")
 2. $ npm install -g grunt-cli, bower, yo
 
-## How to use
+## Usage
+### Prepare project
+
+1. $ mkdir [my-angular-app] && cd $_
+2. $ yo ng-scaffold | yo ng-scaffold:module | yo ng-scaffold:service
+
 ### Develop and build process
 
 Start to develop, to test (incl. code coverage) and finally to build an AngularJS application with one of the following grunt tasks.
@@ -30,6 +29,15 @@ Start to develop, to test (incl. code coverage) and finally to build an AngularJ
 - $ grunt test
 - $ grunt coverage
 - $ grunt release
+
+### End-To-End testing with protractor
+
+Run e2e test with [protractor](https://github.com/angular/protractor):
+
+1. $ npm install -g protractor
+2. $ webdriver-manager update
+3. $ grunt server
+4. $ protractor test/config/protractor.conf.js
 
 ## Stack
 ### Application
