@@ -1,4 +1,5 @@
 /**
+ * <%= appName %>
  * End-To-End Testing: route "home"
  */
 describe('Route "home"', function () {
