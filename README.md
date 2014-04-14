@@ -21,6 +21,16 @@ npm install -g generator-ng-scaffold
 1. Install [node.js and npm](http://nodejs.org/download/ "Download node.js")
 2. $ npm install -g grunt-cli, bower, yo
 
+## How to use
+### Develop and build process
+
+Start to develop, to test (incl. code coverage) and finally to build an AngularJS application with one of the following grunt tasks.
+
+- $ grunt server (default)
+- $ grunt test
+- $ grunt coverage
+- $ grunt release
+
 ## Stack
 ### Application
 

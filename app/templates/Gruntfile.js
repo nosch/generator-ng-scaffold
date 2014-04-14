@@ -1,4 +1,7 @@
-// Generated on <%= (new Date).toISOString().split('T')[0] %> using <%= pkg.name %> <%= pkg.version %>
+/**
+ * ng-scaffold
+ * Grunt task runner configuration.
+ */
 module.exports = function (grunt) {
     'use strict';
 
@@ -15,15 +18,15 @@ module.exports = function (grunt) {
         meta: {
             banner:
                 '/**\n' +
-                    ' * <%%= pkg.name %> v<%= pkg.version %>\n' +
-                    ' * <%%= pkg.homepage %>\n' +
-                    ' *\n' +
-                    ' * Copyright (c) <%%= grunt.template.today("yyyy") %> <%%= pkg.author %>\n' +
-                    ' * Released under the <%%= pkg.licenses[0].type %> license\n' +
-                    ' * <%%= pkg.licenses[0].url %>\n' +
-                    ' *\n' +
-                    ' * Date: <%%= grunt.template.today("yyyy-mm-dd") %>\n' +
-                    ' */\n'
+                ' * <%%= pkg.name %> v<%%= pkg.version %>\n' +
+                ' * <%%= pkg.homepage %>\n' +
+                ' *\n' +
+                ' * Copyright (c) <%%= grunt.template.today("yyyy") %> <%%= pkg.author %>\n' +
+                ' * Released under the <%%= pkg.licenses[0].type %> license\n' +
+                ' * <%%= pkg.licenses[0].url %>\n' +
+                ' *\n' +
+                ' * Date: <%%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                ' */\n'
         },
 
         // Project paths
@@ -129,7 +132,7 @@ module.exports = function (grunt) {
 
             dist: {
                 files: [{
-                    // HTML index and templates
+                    // HTML index
                     cwd: '<%%= scaffold.htmlDir %>',
                     src : ['index.html'],
                     dest: '<%%= scaffold.distDir %>',
@@ -137,6 +140,15 @@ module.exports = function (grunt) {
                 }, {
                     // Fonts and images
                     cwd: '<%%= scaffold.assetDir %>',
+                    src : ['**'],
+                    dest: '<%%= scaffold.distDir %>',
+                    expand: true
+                }]
+            },
+
+            unmin: {
+                files: [{
+                    cwd: '<%%= scaffold.concatDir %>',
                     src : ['**'],
                     dest: '<%%= scaffold.distDir %>',
                     expand: true
@@ -151,7 +163,7 @@ module.exports = function (grunt) {
                     '<%%= scaffold.concatDir %>**/vendor.js'
                 ]
             },
-            default: [
+            standard: [
                 '<%%= scaffold.sourceDir %>**/*.js',
                 '<%%= scaffold.testDir %>**/*.spec.js',
                 '<%%= scaffold.testDir %>**/*.scenario.js',
@@ -161,11 +173,11 @@ module.exports = function (grunt) {
         },
 
         karma: {
-            default: {
+            standard: {
                 configFile: 'test/config/karma.unit.conf.js',
                 browsers: ['PhantomJS']
             },
-            unit: {
+            allBrowsers: {
                 configFile: 'test/config/karma.unit.conf.js'
             },
             coverage: {
@@ -188,7 +200,7 @@ module.exports = function (grunt) {
                 hostname: 'localhost',
                 port: 8080
             },
-            default: {
+            standard: {
                 options: {
                     base: '<%%= scaffold.distDir %>',
                     open: true,
@@ -203,19 +215,36 @@ module.exports = function (grunt) {
         },
 
         watch: {
-            default: {
+            standard: {
                 options: {
                     livereload: true
                 },
                 files: [
                     '<%%= scaffold.sourceDir %>index.html',
                     '<%%= scaffold.sourceDir %>app/**/*.tpl.html',
+                    '<%%= scaffold.sourceDir %>app/**/*.js',
                     '<%%= scaffold.sourceDir %>css/*.css',
-                    '<%%= scaffold.sourceDir %>**/*.js',
+                    '<%%= scaffold.testDir %>**/*.spec.js',
                     'Gruntfile.js'
                 ],
                 tasks: [
-                    'build'
+                    'build',
+                    'jshint',
+                    'karma:standard'
+                ]
+            },
+            dev: {
+                files: [
+                    '<%%= scaffold.sourceDir %>index.html',
+                    '<%%= scaffold.sourceDir %>app/**/*.tpl.html',
+                    '<%%= scaffold.sourceDir %>app/**/*.js',
+                    '<%%= scaffold.sourceDir %>css/*.css',
+                    '<%%= scaffold.testDir %>**/*.spec.js',
+                    'Gruntfile.js'
+                ],
+                tasks: [
+                    'build',
+                    'karma:allBrowsers'
                 ]
             }
         }
@@ -235,14 +264,16 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'prepare',
-        'jshint',
-        'karma:default',
-        'ngmin',
-        'uglify',
-        'cssmin',
         'usemin',
         'copy:dist',
+        'copy:unmin',
         'clean:fonts'
+    ]);
+
+    grunt.registerTask('test', [
+        'build',
+        'karma:allBrowsers',
+        'watch:dev'
     ]);
 
     grunt.registerTask('coverage', [
@@ -252,13 +283,22 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', [
         'build',
+        'jshint',
+        'karma:standard',
         'connect',
-        'watch'
+        'watch:standard'
     ]);
 
     grunt.registerTask('release', [
-        'build',
-        'karma:unit',
+        'prepare',
+        'ngmin',
+        'uglify',
+        'cssmin',
+        'usemin',
+        'copy:dist',
+        'clean:fonts',
+        'jshint',
+        'karma:allBrowsers',
         'clean:tmp'
     ]);
 };
