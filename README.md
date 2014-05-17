@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/nosch/generator-ng-scaffold.png?branch=master)](https://travis-ci.org/nosch/generator-ng-scaffold)
-
-# generator-ng-scaffold
+# generator-ng-scaffold [![Build Status](https://travis-ci.org/nosch/generator-ng-scaffold.png?branch=master)](https://travis-ci.org/nosch/generator-ng-scaffold) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com)
 
 This is a [yeoman](http://yeoman.io) generator for an **AngularJS application scaffold**. It's based on [ng-scaffold](http://github.com/nosch/ng-scaffold). So the generated files are **organized in modules** and not "by layer". It also provides a build, test and basic deployment process based on Grunt.
 
