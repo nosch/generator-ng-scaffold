@@ -11,7 +11,7 @@ npm install -g generator-ng-scaffold
 ## Dependencies
 
 1. Install [node.js and npm](http://nodejs.org/download/ "Download node.js")
-2. $ npm install -g grunt-cli, bower, yo
+2. $ npm install -g grunt-cli, karma-cli, bower, yo
 
 ## Usage
 ### Prepare project
@@ -41,16 +41,16 @@ Run e2e test with [protractor](https://github.com/angular/protractor):
 ## Stack
 ### Application
 
-- AngularJS v1.2.16
+- AngularJS v1.2.23
 - UI-Router v0.2.10
 - Twitter Bootstrap v3.1.1
-- jQuery v2.1.0
+- jQuery v2.1.1
 - Underscore.js v1.6.0
-- Moment.js v2.6.0
-- Modernizr v2.7.2
+- Moment.js v2.8.2
+- Modernizr v2.8.3
 
 ### Build process
 
-- Grunt v0.4.4
-- Bower v1.3.1
-- Karma v0.12.0
+- Grunt v0.4.5
+- Bower v1.3.9
+- Karma v0.12.22
